@@ -35,7 +35,7 @@ client = OpenAI(
 # PAGE CONFIG
 # ─────────────────────────────────────────────────────────────────────────────
 st.set_page_config(
-    page_title="AI Recruitment Assistant — Eidiko",
+    page_title="WeRecruit",
     page_icon="🎯",
     layout="wide",
     initial_sidebar_state="expanded"
@@ -1592,7 +1592,7 @@ with st.sidebar:
         <div class="sb-logo-area">
             <div class="sb-icon">🎯</div>
             <div>
-                <div class="sb-title">AI Recruitment Assistant</div>
+                <div class="sb-title">WeRecruit</div>
                 <div class="sb-sub">Eidiko Systems Integrators</div>
             </div>
         </div>
@@ -1676,7 +1676,7 @@ st.markdown("""
 <div class="topnav-wrap">
     <div class="topnav-brand">
         <div class="topnav-brand-icon">🎯</div>
-        AI Recruitment Assistant
+        WeRecruit
     </div>
     <div class="topnav-links">
         <a href="#dashboard-top" class="topnav-link" target="_self">Dashboard</a>
@@ -1708,11 +1708,8 @@ st.markdown(f"""
     <div class="hero-sparkle"></div>
     <div class="hero-content">
         <div class="hero-left">
-            <div class="hero-eyebrow">
-                ✦ &nbsp;Powered by Generative AI &amp; Semantic Matching
-            </div>
             <div class="hero-headline">
-                AI-Powered Recruitment<br>
+                Recruitment<br>
                 <span>Intelligence Platform</span>
             </div>
             <div class="hero-subline">
@@ -2878,9 +2875,9 @@ st.markdown("""
 
 <div style="text-align:center;padding:20px">
 
-AI Recruitment Assistant
+WeRecruit
 
-Powered by Groq • PostgreSQL • Qdrant • Sentence Transformers
+Powered by Groq • PostgreSQL • Qdrant • Sentence Transformers • Langfuse
 
 © Eidiko Systems Integrators
 
