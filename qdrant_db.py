@@ -1,9 +1,10 @@
 from qdrant_client import QdrantClient
 from qdrant_client.models import PointStruct
 from langfuse import observe
+import os
 client = QdrantClient(
-    host="localhost",
-    port=6333
+    host=os.getenv("QDRANT_HOST"),
+    port=os.getenv("QDRANT_PORT")
 )
 @observe()
 def search_candidates(jd_embedding, limit=10):

@@ -1,20 +1,24 @@
+import os
 import psycopg2
+from dotenv import load_dotenv
 from datetime import datetime
 from pgvector.psycopg2 import register_vector
 from pgvector import Vector
 
-
+load_dotenv()
 def get_conn():
     conn = psycopg2.connect(
-        host="localhost",
-        database="recruitment_db",
-        user="recruitment_user",
-        password="password123",
-        port="5432"
+        host=os.getenv("DB_HOST"),
+        database=os.getenv("DB_NAME"),
+        user=os.getenv("DB_USER"),
+        password=os.getenv("DB_PASSWORD"),
+        port=os.getenv("DB_PORT", "5432"),
+        sslmode="require"
     )
 
     register_vector(conn)
     return conn
+
 
 
 def _safe(val):
