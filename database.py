@@ -13,7 +13,7 @@ def get_conn():
         user=os.getenv("DB_USER"),
         password=os.getenv("DB_PASSWORD"),
         port=os.getenv("DB_PORT", "5432"),
-        sslmode="require"
+        sslmode=os.getenv("DB_SSLMODE", "require")
     )
 
     register_vector(conn)
