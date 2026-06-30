@@ -12,7 +12,6 @@ transformers
 
 groq
 
-langchain
 langfuse
 
 qdrant-client
@@ -23,7 +22,15 @@ pgvector
 python-dotenv
 python-docx
 PyMuPDF
+pypdf
 
 requests
 GitPython
 watchdog
+
+fastapi
+uvicorn
+
+email-validator
+
+python-multipart
