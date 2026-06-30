@@ -1,11 +1,16 @@
+# Standard library
 import os
+from datetime import datetime
+
+# Third-party
 import psycopg2
 from dotenv import load_dotenv
-from datetime import datetime
-from pgvector.psycopg2 import register_vector
 from pgvector import Vector
+from pgvector.psycopg2 import register_vector
 
 load_dotenv()
+
+
 def get_conn():
     conn = psycopg2.connect(
         host=os.getenv("DB_HOST"),

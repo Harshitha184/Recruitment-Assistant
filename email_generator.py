@@ -1,8 +1,11 @@
-from groq import Groq
-from dotenv import load_dotenv
-from langfuse import observe
+ # Standard library
 import os
 import re
+
+# Third-party
+from dotenv import load_dotenv
+from groq import Groq
+from langfuse import observe
 
 load_dotenv()
 
@@ -80,7 +83,7 @@ Rules:
 
     email_content = response.choices[0].message.content
 
-   
+
     email_content = email_content.replace(
         "[Company Name]",
         "Eidiko Systems Integrators"
@@ -91,14 +94,14 @@ Rules:
         "Eidiko Systems Integrators"
     )
 
-   
+
     email_content = re.sub(
         r"<[^>]+>",
         "",
         email_content
     )
 
-   
+
     email_content = re.sub(
         r"\n\s*Dear\s+[A-Za-z\s]+\s*$",
         "",
@@ -130,10 +133,8 @@ Khajaguda X Roads, Gachibowli,
 Hyderabad – 500008, India
 """
 
-    
+
     if "hrteam.eidiko@gmail.com" not in email_content.lower():
         email_content += signature
-
-    print(email_content)
 
     return email_content

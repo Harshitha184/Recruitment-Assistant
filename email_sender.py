@@ -1,20 +1,15 @@
 import os
 import smtplib
-
 from dotenv import load_dotenv
-
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
-
 load_dotenv()
-
 
 def send_email(
     to_email,
     subject,
     body
 ):
-
     sender_email = os.getenv(
         "EMAIL_ADDRESS"
     )
@@ -34,7 +29,6 @@ def send_email(
     )
 
     try:
-
         with smtplib.SMTP(
             "smtp.gmail.com",
             587
@@ -50,9 +44,6 @@ def send_email(
             server.send_message(msg)
 
         return True
-
     except Exception as e:
-
         print(e)
-
         return False

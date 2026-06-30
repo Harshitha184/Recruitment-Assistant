@@ -1,309 +1,163 @@
-# 🚀 AI Recruitment Assistant
+# 🎯 AI Recruitment Assistant
 
-An AI-powered recruitment automation platform that streamlines resume screening, candidate ranking, skill analysis, and recruitment communication using Semantic Search, Large Language Models (LLMs), PostgreSQL, and Vector Databases.
+An AI-powered Recruitment Assistant that automates resume screening, candidate ranking, skill matching, semantic search, and email generation using Large Language Models (LLMs), Vector Databases, and Generative AI.
 
----
-
-## 📌 Overview
-
-AI Recruitment Assistant helps recruiters automate the hiring workflow by:
-
-* Screening resumes against Job Descriptions
-* Ranking candidates using Semantic Similarity
-* Identifying Matched & Missing Skills
-* Generating personalized recruitment emails
-* Managing candidate records
-* Generating recruitment reports
-* Storing embeddings in a Vector Database for future semantic retrieval
-
-The platform combines Generative AI, NLP, Semantic Search, PostgreSQL, and Qdrant to provide intelligent recruitment insights.
+![Python](https://img.shields.io/badge/Python-3.12-blue)
+![Streamlit](https://img.shields.io/badge/Streamlit-WebApp-red)
+![Neon](https://img.shields.io/badge/PostgreSQL-Neon-success)
+![Qdrant](https://img.shields.io/badge/Qdrant-VectorDB-orange)
+![Groq](https://img.shields.io/badge/Groq-LLM-purple)
+![LangChain](https://img.shields.io/badge/LangChain-Framework-green)
 
 ---
 
-## ✨ Features
+# 📌 Project Overview
 
-### 🤖 AI Resume Screening
-
-* Upload multiple resumes
-* Upload Job Description
-* Semantic similarity-based candidate ranking
-* AI-driven candidate evaluation
-
-### 🧠 Skill Intelligence
-
-* Extract skills from Job Descriptions
-* Extract skills from candidate resumes
-* Identify:
-
-  * Matched Skills
-  * Missing Skills
-
-### 📊 Candidate Ranking
-
-* Sentence Transformer embeddings
-* Cosine Similarity matching
-* Automatic scoring and ranking
-
-### 📧 Automated Email Generation
-
-* AI-generated acceptance/rejection emails
-* Personalized candidate communication
-* Bulk email support
-
-### 🗄 Candidate Database
-
-* PostgreSQL-based candidate storage
-* Candidate history tracking
-* Recruitment records management
-
-### 📈 Recruitment Reports
-
-* Candidate analytics
-* Screening summaries
-* Downloadable reports
-
-### ⚡ Vector Database Integration
-
-* Resume embeddings stored in Qdrant
-* Semantic search ready architecture
-* Scalable candidate retrieval
+Recruiting candidates manually is time-consuming and inefficient. This AI Recruitment Assistant automates the recruitment workflow by screening resumes against a job description using semantic similarity, extracting candidate information, ranking applicants, generating AI-powered emails, and storing structured and vector data in cloud databases.
 
 ---
 
-# 🏗 System Architecture
+# ✨ Features
 
-```text
-Job Description
-        │
-        ▼
-Sentence Transformer
-        │
-        ▼
-JD Embedding
-        │
-        ▼
-Cosine Similarity
-        ▲
-        │
-Resume Embeddings
-        │
-        ▼
-Candidate Ranking
-        │
-        ▼
-PostgreSQL Storage
-        │
-        ▼
-Recruitment Reports
+- 📄 Upload multiple resumes (PDF, DOCX, TXT)
+- 🤖 AI-based resume screening
+- 🎯 Semantic similarity scoring
+- 🧠 Automatic skill extraction
+- 👤 Candidate name & email extraction
+- 📊 Recruitment analytics dashboard
+- 📈 Candidate ranking
+- 🗄️ Candidate database management
+- 📧 AI-generated shortlist/rejection emails
+- ☁️ Cloud PostgreSQL (Neon)
+- 🔍 Vector Search using Qdrant Cloud
+- 🌙 Dark / Light Theme
+- 📑 Screening report generation
+- 📥 CSV and Report export
 
-Resume Embeddings
+---
+
+# 🏗️ System Architecture
+
+```
+                 User
+                   │
+                   ▼
+          Streamlit Web Application
+                   │
+        ┌──────────┼──────────┐
+        ▼          ▼          ▼
+ Resume Parser  Skill Extractor  Name & Email Extractor
         │
         ▼
-Qdrant Vector Database
+ Semantic Similarity (Sentence Transformers)
+        │
+        ▼
+ Candidate Ranking
+        │
+ ┌──────┴───────────┐
+ ▼                  ▼
+Neon PostgreSQL   Qdrant Cloud
+        │
+        ▼
+ Email Generator (Groq LLM)
 ```
 
 ---
 
-# 🛠 Tech Stack
+# 🛠️ Tech Stack
 
-## Frontend
+### Frontend
 
-* Streamlit
-* HTML
-* CSS
+- Streamlit
+- HTML
+- CSS
 
-## Backend
+### Backend
 
-* Python
+- Python
 
-## AI / NLP
+### AI / ML
 
-* Sentence Transformers
-* Semantic Similarity
-* Cosine Similarity
-* Generative AI
-* Prompt Engineering
+- Groq LLaMA 3
+- Sentence Transformers
+- LangChain
+- Semantic Search
 
-## LLM
+### Databases
 
-* Groq API
+- Neon PostgreSQL
+- Qdrant Cloud
 
-## Databases
+### Observability
 
-### PostgreSQL
-
-Stores:
-
-* Candidate Name
-* Email
-* Resume Metadata
-* Score
-* Status
-* Screening History
-
-### Qdrant
-
-Stores:
-
-* Resume Embeddings
-* Vector Metadata
-* Semantic Search Data
-
-## Email Services
-
-* SMTP
-* Gmail Integration
+- Langfuse
 
 ---
 
 # 📂 Project Structure
 
-```text
-AI_RECRUITMENT_ASSISTANT/
-
-├── app.py
-├── database.py
-├── qdrant_db.py
-
-├── matcher.py
-├── resume_parser.py
-
-├── name_extractor.py
-├── email_extractor.py
-
-├── email_generator.py
-├── email_sender.py
-
-├── report_generator.py
-├── utils.py
-
-├── requirements.txt
-├── .env
-
-├── Eidiko_logo.png
 ```
+AI-Recruitment-Assistant/
 
----
-
-# 🔍 AI Workflow
-
-## Resume Screening
-
-```text
-Resume
-    │
-    ▼
-Text Extraction
-    │
-    ▼
-Embedding Generation
-    │
-    ▼
-Semantic Similarity
-    │
-    ▼
-Candidate Score
-```
-
----
-
-## Skill Analysis
-
-```text
-Job Description
-       │
-       ▼
-Skill Extraction
-
-Resume
-       │
-       ▼
-Skill Extraction
-
-Matched Skills
-Missing Skills
-```
-
----
-
-## Email Automation
-
-```text
-Candidate Status
-        │
-        ▼
-LLM Email Generation
-        │
-        ▼
-SMTP Delivery
+│── app.py
+│── database.py
+│── pipeline.py
+│── matcher.py
+│── utils.py
+│── qdrant_db.py
+│── email_generator.py
+│── email_sender.py
+│── report_generator.py
+│── requirements.txt
+│── README.md
+│── .env.example
+│── assets/
+│── resumes/
 ```
 
 ---
 
 # 🚀 Installation
 
-## Clone Repository
+Clone the repository
 
 ```bash
 git clone https://github.com/Harshitha184/Recruitment-Assistant.git
+```
 
+Move into the project
+
+```bash
 cd Recruitment-Assistant
 ```
 
----
-
-## Create Virtual Environment
+Create virtual environment
 
 ```bash
 python -m venv venv
+```
 
+Activate virtual environment
+
+Linux
+
+```bash
 source venv/bin/activate
 ```
 
----
+Windows
 
-## Install Dependencies
+```bash
+venv\Scripts\activate
+```
+
+Install dependencies
 
 ```bash
 pip install -r requirements.txt
 ```
 
----
-
-## Configure Environment Variables
-
-Create a `.env` file:
-
-```env
-GROQ_API_KEY=your_api_key
-
-EMAIL_ADDRESS=your_email@gmail.com
-EMAIL_PASSWORD=your_app_password
-```
-
----
-
-## Run PostgreSQL
-
-Ensure PostgreSQL is running.
-
-Database:
-
-```text
-recruitment_db
-```
-
----
-
-## Run Qdrant
-
-```bash
-docker run -p 6333:6333 qdrant/qdrant
-```
-
----
-
-## Start Application
+Run the application
 
 ```bash
 streamlit run app.py
@@ -311,70 +165,75 @@ streamlit run app.py
 
 ---
 
+# 🔑 Environment Variables
+
+Create a `.env` file.
+
+```env
+GROQ_API_KEY=
+
+DATABASE_URL=
+
+QDRANT_URL=
+
+QDRANT_API_KEY=
+
+LANGFUSE_PUBLIC_KEY=
+
+LANGFUSE_SECRET_KEY=
+
+EMAIL=
+
+EMAIL_PASSWORD=
+```
+
+---
+
 # 📸 Screenshots
 
-Add screenshots here:
+Add screenshots here after deployment.
 
-### Home Page
-
-![Home Page](screenshots/home.png)
-
-### Resume Screening
-
-![Resume Screening](screenshots/screening.png)
-
-### Candidate Database
-
-![Database](screenshots/database.png)
-
-### Reports
-
-![Reports](screenshots/reports.png)
+- Dashboard
+- Resume Screening
+- Recruitment Analytics
+- Candidate Database
+- Candidate Timeline
+- Screening Report
+- Email Generator
 
 ---
 
-# 🎯 Key Highlights
+# 🌐 Live Demo
 
-✅ AI-Powered Resume Screening
-
-✅ Semantic Similarity Matching
-
-✅ Candidate Ranking System
-
-✅ AI Skill Analysis
-
-✅ Automated Recruitment Emails
-
-✅ PostgreSQL Integration
-
-✅ Qdrant Vector Database
-
-✅ Generative AI Integration
-
-✅ End-to-End Recruitment Automation
+Coming Soon...
 
 ---
 
-# 📚 Future Enhancements
+# 🔮 Future Enhancements
 
-* Interview Scheduling
-* Candidate Chatbot
-* ATS Integration
-* Recruiter Analytics Dashboard
-* Advanced Vector Search
-* RAG-based Candidate Retrieval
-* Multi-Role Recruitment Support
+- Interview Scheduling
+- Recruiter Login
+- Candidate Comparison
+- PDF Report Generation
+- Docker Support
+- CI/CD Pipeline
+- Multi-user Authentication
 
 ---
 
 # 👩‍💻 Author
 
-**Naga Harshitha Vanaparthi**
+**Vanaparthi Naga Harshitha**
 
-AI / ML | Generative AI | Full Stack Development
+Final Year B.Tech Student
+
+AI | Generative AI | Python | LLM | LangChain
+
+GitHub:
+https://github.com/Harshitha184
 
 ---
 
-# 📄 License
+# ⭐ Support
 
-This project is developed for educational and recruitment automation purposes.
+If you like this project, consider giving it a ⭐ on GitHub.

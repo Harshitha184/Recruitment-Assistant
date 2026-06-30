@@ -1,34 +1,40 @@
-import streamlit as st
-import os, re
-import pandas as pd
+"""
+AI Recruitment Assistant (WeRecruit)
+
+Developer:
+    Vanaparthi Naga Harshitha
+
+Technologies:
+    Python, Streamlit, Neon PostgreSQL, Qdrant Cloud,
+    Groq, LangChain, Langfuse
+"""
+
+# Standard library
+import os
 from collections import Counter
+
+# Third-party
+import streamlit as st
+import pandas as pd
 import plotly.graph_objects as go
-from name_extractor import extract_candidate_name
-from matcher import calculate_match_score
+from langfuse import Langfuse
+
+# Local project imports
+from matcher import calculate_match_score, model
 from utils import get_status
 from resume_parser import extract_resume_text
 from email_generator import generate_email
 from email_sender import send_email
 from database import save_candidates, save_email, get_all_candidates, get_all_emails, clear_db
 from report_generator import generate_screening_report
-from email_extractor import extract_candidate_email
-from matcher import model
-from qdrant_db import save_embedding, get_all_vectors
-from skill_extractor import extract_jd_skills, extract_resume_skills, compute_skill_match
-from langfuse import Langfuse
+from qdrant_db import save_embedding
+from skill_extractor import extract_jd_skills, compute_skill_match
 from pipeline import recruitment_pipeline
 
 langfuse = Langfuse(
     public_key=os.getenv("LANGFUSE_PUBLIC_KEY"),
     secret_key=os.getenv("LANGFUSE_SECRET_KEY"),
     host=os.getenv("LANGFUSE_BASE_URL")
-)
-print("Langfuse initialized successfully")
-
-from openai import OpenAI
-client = OpenAI(
-    api_key=os.getenv("GROQ_API_KEY"),
-    base_url="https://api.groq.com/openai/v1"
 )
 
 # ─────────────────────────────────────────────────────────────────────────────
@@ -1620,9 +1626,8 @@ with st.sidebar:
         toggle_icon = "🌙  Dark" if st.session_state["theme"] == "light" else "☀️  Light"
         if st.button(toggle_icon, use_container_width=True, key="theme_toggle_btn"):
             st.session_state["theme"] = "dark" if st.session_state["theme"] == "light" else "light"
-            st.write("Current Theme:", st.session_state["theme"])
             st.rerun()
-            
+
 
     st.markdown('<div class="sb-section-title">Job Description</div>', unsafe_allow_html=True)
     jd = st.text_area(
@@ -1747,21 +1752,6 @@ st.markdown(f"""
     </div>
 </div>
 """, unsafe_allow_html=True)
-# hero_c1, hero_c2, hero_c3 = st.columns([1,1,4])
-
-# with hero_c1:
-#     st.link_button(
-#         "🚀 Start Screening",
-#         "#resume-screening",
-#         use_container_width=True
-#     )
-
-# with hero_c2:
-#     st.link_button(
-#         "📊 View Analytics",
-#         "#recruitment-analytics",
-#         use_container_width=True
-#     )
 
 # ─────────────────────────────────────────────────────────────────────────────
 # FEATURE CARDS
@@ -2166,13 +2156,16 @@ with tab1:
                     candidate_email = result["candidate_email"]
 
                     resume_embedding = model.encode(text).tolist()
-                    save_embedding(
-                        candidate_id=i + 1,
-                        candidate_name=candidate_name,
-                        candidate_email=candidate_email,
-                        score=score,
-                        embedding=resume_embedding
-                    )
+                    try:
+                        save_embedding(
+                            candidate_id=i + 1,
+                            candidate_name=candidate_name,
+                            candidate_email=candidate_email,
+                            score=score,
+                            embedding=resume_embedding
+                        )
+                    except Exception as e:
+                        st.warning(f"Qdrant Warning: {e}")
                     matched, missing = compute_skill_match(resume_skills, jd_skills)
                     results.append({
                         "Candidate":      candidate_name,
@@ -2514,9 +2507,9 @@ with tab2:
 
             score = int(row["Score"])
 
-            if score >= 75:
+            if score >= 60:
                 score_color = "🟢"
-            elif score >= 50:
+            elif score >= 40:
                 score_color = "🟡"
             else:
                 score_color = "🔴"
@@ -2546,9 +2539,9 @@ with tab2:
                 st.write(
                     f"**Missing Skills:** {row['Missing Skills']}"
                 )
-    
-     
-        
+
+
+
         dl1, dl2 = st.columns(2)
         dl1.download_button(
             "⬇️  Export Full DB CSV",
@@ -2588,12 +2581,13 @@ with tab2:
             dot_cls = "tl-dot-done" if done else "tl-dot-pending"
             lbl_cls = "tl-label-done" if done else ""
             sub_html = f'<div class="tl-sub">{sub}</div>' if sub else ""
-            return f"""
-            <div class="tl-step">
-                <div class="tl-dot {dot_cls}">{icon if done else "○"}</div>
-                <div class="tl-label {lbl_cls}">{label}</div>
-                {sub_html}
-            </div>"""
+            return (
+                f'<div class="tl-step">'
+                f'<div class="tl-dot {dot_cls}">{icon if done else "○"}</div>'
+                f'<div class="tl-label {lbl_cls}">{label}</div>'
+                f'{sub_html}'
+                f'</div>'
+            )
 
         def _tl_line(done):
             return f'<div class="tl-line {"tl-line-done" if done else ""}"></div>'
